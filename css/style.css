@@ -32,8 +32,8 @@ img {
 
 /* Navbar */
 .navbar {
-    background: #fff;
-    padding: 20px;
+    background: #000;                         /* black bar */
+    padding: 12px 20px;                       /* slightly smaller padding */
 }
 
 .navbar .container {
@@ -51,11 +51,22 @@ img {
     display: block;
     font-weight: 600;
     transition: 0.5s;
+    color: #fff;                             /* white text on black */
 }
 
 .navbar ul li a:hover {
     color: var(--primary-color);
 }
+
+/* ensure buttons in navbar look right */
+.navbar .btn {
+    background: var(--primary-color);
+    color: #fff;
+}
+.navbar .btn:hover {
+    background: #0056d6;
+}
+
 
 /* Utility classes */
 .container {
@@ -79,3 +90,21 @@ img {
     background: #0073ff;
     color: #333;
 }
+
+/* Footer */
+.site-footer {
+    background: #000;
+    color: #fff;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+.site-footer .footer-sprites {
+    /* reserve space for sprite graphics */
+    height: 60px;
+    margin-bottom: 10px;
+}
+.site-footer .footer-disclaimer {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
