@@ -5,13 +5,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-variable "aws_region" {
-  default = "us-east-1"
-}
-
-variable "telegram_token" {}
-variable "telegram_chat" {}
-
 resource "aws_iam_role" "lambda_exec" {
   name = "contact_lambda_exec"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
@@ -76,6 +69,46 @@ resource "aws_lambda_permission" "allow_apigw" {
   function_name = aws_lambda_function.contact.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.http_api.execution_arn}/*/*"
+}
+
+resource "aws_sns_topic" "alerts" {
+  name = "ops-alerts"
+}
+
+resource "aws_sns_topic_subscription" "email" {
+  topic_arn = aws_sns_topic.alerts.arn
+  protocol  = "email"
+  endpoint  = var.alarm_email
+}
+
+resource "aws_cloudwatch_metric_alarm" "high_rate" {
+  alarm_name          = "contact-high-invocations"
+  namespace           = "AWS/Lambda"
+  metric_name         = "Invocations"
+  dimensions = {
+    FunctionName = aws_lambda_function.contact.function_name
+  }
+  statistic           = "Sum"
+  period              = 300          # 5-minute window
+  evaluation_periods  = 1
+  threshold           = 100          # >100 calls in 5m
+  comparison_operator = "GreaterThanThreshold"
+  alarm_actions       = [aws_sns_topic.alerts.arn]
+}
+
+resource "aws_cloudwatch_metric_alarm" "high_cost" {
+  alarm_name          = "monthly-cost"
+  namespace           = "AWS/Billing"
+  metric_name         = "EstimatedCharges"
+  dimensions = {
+    Currency = "USD"
+  }
+  statistic           = "Maximum"
+  period              = 21600        # 6-hour granularity
+  evaluation_periods  = 1
+  threshold           = var.budget_limit
+  comparison_operator = "GreaterThanThreshold"
+  alarm_actions       = [aws_sns_topic.alerts.arn]
 }
 
 output "api_url" {
