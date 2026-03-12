@@ -31,6 +31,8 @@ Then open `http://localhost:8000` in your browser.
 
 Since the site is entirely static, you can host it on any static site service such as GitHub Pages, Netlify, Vercel, or a simple web server.
 
+If you need the contact form to actually send a notification, there is a small AWS Lambda function included in `lambda/` that can be deployed in front of an API Gateway.  The `aws/` and `terraform/` directories contain example SAM and Terraform configurations respectively; they are ignored by Cloudflare Pages via `.cfignore`.  See `aws/README.md` or `terraform/README.md` for instructions.
+
 ## Contributing
 
 Create a branch from `main`, make your changes, and open a pull request. Example:
