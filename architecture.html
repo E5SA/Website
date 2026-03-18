@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form Architecture - John's Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 24px;
+        }
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1rem;
+            margin-bottom: 48px;
+            text-align: center;
+            max-width: 600px;
+        }
+        .diagram-container {
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 48px 32px;
+            width: 100%;
+            max-width: 960px;
+            display: flex;
+            justify-content: center;
+        }
+        .mermaid svg { max-width: 100%; height: auto; }
+        .legend {
+            margin-top: 48px;
+            width: 100%;
+            max-width: 960px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .legend-card {
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .legend-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #4891ff;
+        }
+        .legend-card p {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+        .legend-card code {
+            background: rgba(72,145,255,0.12);
+            color: #6aabff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        footer {
+            margin-top: 60px;
+            font-size: 0.75rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact Form Architecture</h1>
+    <p class="subtitle">How customer contact requests flow from the website to your Telegram notifications.</p>
+
+    <div class="diagram-container">
+        <pre class="mermaid">
+flowchart LR
+    A["🌐 Contact Form<br/>contact.html"]
+    B["⚡ API Gateway<br/>POST /contact"]
+    C["λ AWS Lambda<br/>handler.js"]
+    D["📱 Telegram<br/>Notification"]
+    E["📊 CloudWatch<br/>Alarm"]
+    F["📧 SNS Email<br/>Alert"]
+
+    A -->|"POST JSON"| B
+    B --> C
+    C -->|"Telegram API"| D
+    C -.->|"metrics"| E
+    E -->|">100 calls / 5min"| F
+
+    style A fill:#1a1a1a,stroke:#4891ff,color:#fff
+    style B fill:#1a1a1a,stroke:#4891ff,color:#fff
+    style C fill:#1a1a1a,stroke:#4891ff,color:#fff
+    style D fill:#0d3b0d,stroke:#22c55e,color:#fff
+    style E fill:#3b2d0d,stroke:#f59e0b,color:#fff
+    style F fill:#3b2d0d,stroke:#f59e0b,color:#fff
+        </pre>
+    </div>
+
+    <div class="legend">
+        <div class="legend-card">
+            <h3>1. Contact Form</h3>
+            <p>Customer fills out name, email, mobile &amp; message on <code>contact.html</code> and submits the form.</p>
+        </div>
+        <div class="legend-card">
+            <h3>2. API Gateway</h3>
+            <p>An AWS HTTP API receives the POST request and routes it to the Lambda function. Configured in <code>terraform/main.tf</code> or <code>aws/sam.yaml</code>.</p>
+        </div>
+        <div class="legend-card">
+            <h3>3. AWS Lambda</h3>
+            <p>The <code>lambda/handler.js</code> function parses the form data and calls the Telegram Bot API to send a formatted message.</p>
+        </div>
+        <div class="legend-card">
+            <h3>4. Telegram Notification</h3>
+            <p>You receive an instant message in your Telegram chat with the customer's details. Requires <code>TELEGRAM_BOT_TOKEN</code> and <code>TELEGRAM_CHAT_ID</code>.</p>
+        </div>
+        <div class="legend-card">
+            <h3>5. CloudWatch Alarm</h3>
+            <p>Monitors Lambda invocations. If more than 100 calls occur in 5 minutes, it triggers an alert to prevent abuse.</p>
+        </div>
+        <div class="legend-card">
+            <h3>6. SNS Email Alert</h3>
+            <p>CloudWatch sends an email via SNS to <code>alarm_email</code> when thresholds are breached (spam or cost spikes).</p>
+        </div>
+    </div>
+
+    <footer>© 2026 John's Website — Architecture Overview</footer>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1a1a1a',
+                primaryTextColor: '#fff',
+                lineColor: '#4891ff',
+                fontFamily: 'Space Grotesk, sans-serif'
+            }
+        });
+    </script>
+</body>
+</html>
