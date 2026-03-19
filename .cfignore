@@ -1,0 +1,10 @@
+# files/directories to exclude from Cloudflare Pages deployment
+
+lambda/
+aws/
+terraform/
+start.sh
+serve.js
+architecture.html
+README.md
+GUIDE.md

@@ -1,0 +1,48 @@
+# AWS SAM template for the contact form Lambda and API
+# Deploy with: sam build && sam deploy --guided
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda for contact form notification
+
+Parameters:
+  TelegramToken:
+    Type: String
+    Description: Telegram bot token
+  TelegramChat:
+    Type: String
+    Description: Chat ID to send messages to
+
+Resources:
+  ContactFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs18.x
+      Handler: handler.handler
+      CodeUri: lambda/
+      Environment:
+        Variables:
+          TELEGRAM_BOT_TOKEN: !Ref TelegramToken
+          TELEGRAM_CHAT_ID: !Ref TelegramChat
+      Policies:
+        - AWSLambdaBasicExecutionRole
+
+  ContactApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Cors: true
+      DefinitionBody:
+        openapi: 3.0.1
+        paths:
+          /contact:
+            post:
+              x-amazon-apigateway-integration:
+                uri: !Sub |
+                  arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ContactFunction.Arn}/invocations
+                httpMethod: POST
+                type: aws_proxy
+Outputs:
+  ApiUrl:
+    Description: "Invoke URL for the contact API"
+    Value: !Sub "https://${ContactApi}.execute-api.${AWS::Region}.amazonaws.com/prod/contact"
