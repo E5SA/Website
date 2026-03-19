@@ -6,10 +6,12 @@ A modern, dark-themed portfolio website with a contact form that sends notificat
 
 | What | Where | Description |
 |------|-------|-------------|
-| 🏠 Home page | `index.html` | Hero banner, services, testimonials, call-to-action |
+| 🏠 Home page | `index.html` | Hero, photo showcase, services (Photography/Drones/Floorplans), partners marquee, testimonials, CTA |
 | 📧 Contact page | `contact.html` | Form for customers to reach out (name, email, mobile, message) |
+| 📜 Terms of Service | `terms.html` | 11-section terms and conditions page |
 | 🎨 Styles | `css/style.css` | Dark theme, responsive layout, animations |
-| ⚡ Scripts | `js/main.js` | Scroll effects and reveal animations |
+| ⚡ Scripts | `js/main.js` | Scroll effects, GSAP horizontal scroll, partners marquee |
+| 🖼️ Partner logos | `images/partners/` | Ray White, Fletchers, Barry Plant, X Commercial |
 | ☁️ Lambda | `lambda/handler.js` | Sends a Telegram message when someone submits the contact form |
 | 📐 Architecture diagram | `architecture.html` | Visual flowchart of how the contact notification system works |
 | 🔧 Infrastructure | `aws/` and `terraform/` | Deploy the Lambda + API Gateway to AWS |
@@ -43,9 +45,11 @@ The site uses a **dark theme** inspired by [tazmo.com.au](https://www.tazmo.com.
 
 The navbar is fixed at the top with a glass blur effect. Cards and buttons have subtle hover animations.
 
-Between the hero and services sections, there's a **horizontal-scroll photo showcase** — a compact white strip (460px tall) containing 9 photo placeholders that scroll horizontally as you scroll down the page. It uses [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) with 1:1 scroll speed and centers on screen before scrolling begins.
+Between the hero and services sections, there's a **horizontal-scroll photo showcase** — a compact white strip (460px tall) containing 9 photo placeholders that scroll horizontally as you scroll down the page. It uses [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) with 1:1 scroll speed, centers on screen before scrolling begins, and stops when the last photo reaches the right edge.
 
-A **partners marquee** section displays real estate partner logos in a smooth, scroll-reactive infinite scroll animation.
+The services section highlights three core offerings: **Photography**, **Drones**, and **Floorplans**.
+
+A **"Partnered With"** marquee section displays partner logos (Ray White, Fletchers, Barry Plant, X Commercial) in a smooth, scroll-reactive infinite scroll animation.
 
 ## Setting Up the Contact Form
 
@@ -112,8 +116,9 @@ The site is plain HTML — no build step required. You can host it on:
 
 ## What's Still Needed
 
-- [ ] **Add logo and favicon** — Create an `images/` folder with `logo.png` and `favicon.ico`
+- [ ] **Add logo and favicon** — Add `logo.png` and `favicon.ico` to the `images/` folder
 - [ ] **Add an About page** — The "About" nav link currently goes nowhere
+- [ ] **Replace photo placeholders** — Add real photos to the horizontal scroll showcase
 - [ ] **Update social media links** — Footer links are placeholders (`#`)
 - [ ] **Deploy the contact backend** — Follow the steps above
 - [ ] **Update form action URL** — Point it to your deployed API
@@ -124,10 +129,11 @@ The site is plain HTML — no build step required. You can host it on:
 website/
 ├── index.html           ← Home page
 ├── contact.html         ← Contact form
+├── terms.html           ← Terms of Service
 ├── architecture.html    ← System diagram
 ├── css/style.css        ← All styles
 ├── js/main.js           ← Client-side scripts
-├── images/              ← (create this) Logo & favicon
+├── images/partners/     ← Partner logos (Ray White, Fletchers, Barry Plant, X Commercial)
 ├── lambda/handler.js    ← Telegram notification Lambda
 ├── aws/sam.yaml         ← SAM deployment template
 ├── terraform/           ← Terraform deployment config

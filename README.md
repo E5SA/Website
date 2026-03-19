@@ -16,14 +16,16 @@ c:/Users/l172955/website/
 
 ```
 .
-├── index.html              # Home page — hero, services grid, testimonials, CTA, footer
+├── index.html              # Home page — hero, photo showcase, services, partners, testimonials, CTA, footer
 ├── contact.html            # Contact page — form (name/email/mobile/message), same nav+footer
+├── terms.html              # Terms of Service page — 11 sections, dark themed
 ├── architecture.html       # Standalone Mermaid.js diagram showing the contact form notification flow
 ├── css/
 │   └── style.css           # All styles — dark theme, responsive, animations
 ├── js/
-│   └── main.js             # Navbar scroll effect, smooth scroll, IntersectionObserver reveal
-├── images/                 # (NOT YET CREATED) — expected to contain logo.png, favicon.ico
+│   └── main.js             # Navbar scroll, smooth scroll, reveal, GSAP horizontal scroll, marquee
+├── images/
+│   └── partners/           # Partner logos (raywhite.png, fletchers.png, barryplant.svg, xcommercial.svg)
 ├── lambda/
 │   └── handler.js          # AWS Lambda — parses form POST, sends Telegram message
 ├── aws/
@@ -35,7 +37,7 @@ c:/Users/l172955/website/
 │   └── README.md           # Terraform deployment instructions
 ├── serve.js                # Node.js static file server for local development (port 8000)
 ├── start.sh                # Shell helper to start python3 HTTP server (Unix/macOS)
-├── .cfignore               # Excludes lambda/, aws/, terraform/, start.sh from Cloudflare Pages deploy
+├── .cfignore               # Excludes lambda/, aws/, terraform/, start.sh, serve.js, architecture.html, README.md, GUIDE.md from Cloudflare Pages deploy
 ├── README.md               # THIS FILE — Amp context
 └── GUIDE.md                # Human-readable project guide
 ```
@@ -67,7 +69,7 @@ All headings use `text-transform: uppercase` and `letter-spacing: 0.04em`.
 ### Icons
 
 Font Awesome 7.0.1 via CDN (`cdnjs.cloudflare.com`). Used for:
-- Service cards: `fa-code`, `fa-palette`, `fa-cloud`, `fa-mobile-screen`, `fa-lightbulb`
+- Service cards: `fa-camera`, `fa-helicopter`, `fa-compass-drafting`
 - Contact button: `fa-regular fa-envelope`
 - Social footer: `fa-brands fa-tiktok`, `fa-youtube`, `fa-facebook`, `fa-instagram`
 
@@ -75,20 +77,24 @@ Font Awesome 7.0.1 via CDN (`cdnjs.cloudflare.com`). Used for:
 
 ### index.html Sections (in DOM order)
 
-1. **`nav.navbar`** — Fixed top, glassmorphic (`backdrop-filter: blur`). Logo left, nav links right. Contact link is `.btn` styled.
+1. **`nav.navbar`** — Fixed top, glassmorphic (`backdrop-filter: blur`). Logo left, nav links right (Home, About, Terms, Contact). Contact link is `.btn` styled.
 2. **`section.hero`** — Full viewport (`min-height: 100vh`), centered. `h1` + `p` + two CTA buttons (`.btn-accent`, `.btn-outline`). Radial gradient glow via `::before`.
-3. **`div.photo-showcase`** — Horizontal-scroll photo gallery. `.horizontal-pin-wrap` (460px, white `#ffffff` background, `overflow: hidden`) is pinned by GSAP ScrollTrigger. `.horizontal-track` contains 9 `.photo-placeholder` elements with varying heights (`.photo-tall` 420px, `.photo-medium` 340px, `.photo-short` 260px). Pins at `center center` so photos are centered on screen. `scrub: true` for 1:1 scroll speed. Gap `24px`, side padding `30px`.
-4. **`section.services`** — `h2` + `.services-grid` (CSS grid, 3→2→1 cols responsive). 5 `.service-card` elements, each with icon (`<i>`), `<h3>`, `<p>`.
-5. **`section.partners`** — `&campaigns` heading + JS-driven marquee with 12 partner logos (duplicated for seamless loop). Scroll-reactive with lerp smoothing.
+3. **`div.photo-showcase`** — Horizontal-scroll photo gallery. `.horizontal-pin-wrap` (460px, white `#ffffff` background, `overflow: hidden`) is pinned by GSAP ScrollTrigger. `.horizontal-track` (`width: max-content`, padding `30px` left / `120px` right) contains 9 `.photo-placeholder` elements with varying heights (`.photo-tall` 420px, `.photo-medium` 340px, `.photo-short` 260px). Pins at `center center` so photos are centered on screen. `scrub: true` for 1:1 scroll speed. `end` uses `track.offsetWidth - window.innerWidth` so scrolling stops when last photo reaches right edge. Gap `24px`.
+4. **`section.services`** — `h2 "What We Do"` + `.services-grid` (CSS grid, 3→2→1 cols responsive). 3 `.service-card` elements: Photography (`fa-camera`), Drones (`fa-helicopter`), Floorplans (`fa-compass-drafting`).
+5. **`section.partners`** — `"Partnered With"` heading (uppercase) + JS-driven marquee with 4 partner logos (Ray White, Fletchers, Barry Plant, X Commercial) repeated 4× for seamless loop. Scroll-reactive with lerp smoothing.
 6. **`section.testimonials`** — `h2` + `.testimonials-grid` (3→2→1 cols). 3 `.testimonial-card` with quote `<p>`, author `<span><strong>`.
 7. **`section.cta-section`** — `h2` + `p` + `.btn-accent` linking to `contact.html`.
-8. **`footer.site-footer`** — `.social-links` (4 icon links) + `.footer-disclaimer`.
+8. **`footer.site-footer`** — `.social-links` (4 icon links) + `.footer-disclaimer` + Terms of Service link.
 
 ### contact.html Sections
 
 1. **`nav.navbar`** — Identical to index.html.
 2. **`main.content > section.contact-section`** — `h1` + `p` + `form.contact-form`. Form fields: name (text), email (email), mobile (tel), message (textarea). Action URL is placeholder: `https://your-api.example.com/contact`. Submit button is `<button type="submit">`.
 3. **`footer.site-footer`** — Identical to index.html.
+
+### terms.html
+
+Terms of Service page with 11 sections (Introduction, Scope of Services, Bookings, Client Responsibilities, Pricing, IP, Liability, Cancellation, Privacy, Governing Law, Entire Agreement). Uses `.terms-section` and `.terms-content` CSS classes. Same nav and footer as other pages.
 
 ### architecture.html
 
@@ -102,15 +108,16 @@ Single flat CSS file, ~900 lines. Organised in sections:
 3. **Navbar** — Fixed, transparent bg with blur, border-bottom
 4. **Buttons** — `.btn`, `.btn-accent`, `.btn-outline`, `.hero-buttons`
 5. **Hero** — Flexbox centered, clamp() font sizing, `::before` radial glow
-6. **Photo Showcase** — `.photo-showcase` (transparent bg), `.horizontal-pin-wrap` (460px, white bg, overflow hidden), `.horizontal-track` (flex, gap 24px, padding 30px). Photo height classes: `.photo-tall` (420px), `.photo-medium` (340px), `.photo-short` (260px)
+6. **Photo Showcase** — `.photo-showcase` (transparent bg), `.horizontal-pin-wrap` (460px, white bg, overflow hidden), `.horizontal-track` (flex, gap 24px, padding 30px left / 120px right, `width: max-content`). Photo height classes: `.photo-tall` (420px), `.photo-medium` (340px), `.photo-short` (260px)
 7. **Services** — Grid layout, `.service-card` with hover lift/shadow/border
-8. **Partners** — `&campaigns` heading, marquee track with partner logos, brightness/invert filter, Ray White scale override
+8. **Partners** — `"Partnered With"` heading (uppercase), marquee track with partner logos, brightness/invert filter, Ray White scale override
 9. **Testimonials** — Grid layout, `.testimonial-card` with `::before` decorative quote mark
 10. **CTA Section** — Centered text, radial glow bg
-11. **Contact Form** — Dark inputs, accent focus ring, labels, button styling
-12. **Footer** — `.social-links` circular icon buttons, disclaimer
-13. **Animations** — `@keyframes fadeInUp`, `.fade-in-up`
-14. **Responsive** — Breakpoints at 992px, 768px, 480px
+11. **Terms of Service** — `.terms-section`, `.terms-content` with styled h2/h3/p/ul elements, `.terms-contact` CTA
+12. **Contact Form** — Dark inputs, accent focus ring, labels, button styling
+13. **Footer** — `.social-links` circular icon buttons, disclaimer, Terms link
+14. **Animations** — `@keyframes fadeInUp`, `.fade-in-up`
+15. **Responsive** — Breakpoints at 992px, 768px, 480px
 
 ## JavaScript (`js/main.js`)
 
@@ -118,8 +125,8 @@ Vanilla JS, depends on GSAP + ScrollTrigger (CDN). Five features:
 1. **Navbar scroll** — Adds `.navbar-scrolled` class when `scrollY > 50`.
 2. **Smooth scroll** — Intercepts `a[href^="#"]` clicks, uses `scrollIntoView`.
 3. **Scroll reveal** — `IntersectionObserver` on `.service-card`, `.testimonial-card`, `.hero`; adds `.revealed` class; unobserves after trigger.
-4. **Horizontal photo scroll** — GSAP ScrollTrigger pins `.horizontal-pin-wrap` and translates `.horizontal-track` horizontally as the user scrolls. `scrub: true` for 1:1 speed matching. `start: "center center"` so photos are centered on screen before scrolling begins. The white strip (`460px` tall, `overflow: hidden`) is on the pin wrap, not the outer section (so ScrollTrigger's spacer doesn't show white).
-5. **Partners marquee** — JS-driven `requestAnimationFrame` loop with lerp smoothing. Scroll-reactive: speeds up on scroll, reverses on scroll-up, settles back to base drift. Constants: `baseSpeed=-0.8`, `scrollMultiplier=8`, `lerp=0.06`.
+4. **Horizontal photo scroll** — GSAP ScrollTrigger pins `.horizontal-pin-wrap` and translates `.horizontal-track` horizontally as the user scrolls. `scrub: true` for 1:1 speed matching. `start: "center center"` so photos are centered on screen before scrolling begins. `end` uses `track.offsetWidth - window.innerWidth` so scrolling stops when last photo reaches right edge. The white strip (`460px` tall, `overflow: hidden`) is on the pin wrap, not the outer section (so ScrollTrigger's spacer doesn't show white).
+5. **Partners marquee** — JS-driven `requestAnimationFrame` loop with lerp smoothing. Scroll-reactive: speeds up on scroll, reverses on scroll-up, settles back to base drift. Constants: `baseSpeed=-0.8`, `scrollMultiplier=8`, `lerp=0.06`. Track width divided by 4 (4 logo sets) for seamless wrapping in both directions.
 
 ## Backend / Infrastructure
 
@@ -180,10 +187,10 @@ Host on Cloudflare Pages, GitHub Pages, Netlify, Vercel, or any static server. `
 
 ## Known Gaps / TODOs
 
-- **`images/` directory does not exist** — `logo.png` and `favicon.ico` are referenced but missing. These need to be created/added.
+- **`logo.png` and `favicon.ico`** — Referenced in nav and `<head>` but files don't exist yet. Need to be created/added to `images/`.
 - **About page** — Nav links to `#` (no about page or section exists yet).
 - **Contact form action URL** — Still set to placeholder `https://your-api.example.com/contact`. Must be updated after backend deployment.
 - **No mobile hamburger menu** — Navbar links stack/shrink on mobile but there is no burger toggle for very small screens.
-- **`serve.js` and `architecture.html`** — Development/documentation files; should be added to `.cfignore` if deploying to Cloudflare.
 - **Social media links** — All `href="#"` placeholders. Need real URLs.
 - **No form client-side validation feedback** — Form uses HTML5 `required` but no JS validation or success/error messaging after submit.
+- **Photo placeholders** — 9 placeholder boxes in horizontal scroll; need real photos.
