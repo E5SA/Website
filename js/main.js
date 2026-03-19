@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSpeed = baseSpeed;
     let targetSpeed = baseSpeed;
     let lastScrollY = window.scrollY;
-    let halfWidth = marqueeTrack.scrollWidth / 2;
+    let setWidth = marqueeTrack.scrollWidth / 4;
 
     window.addEventListener("scroll", () => {
       const delta = window.scrollY - lastScrollY;
@@ -72,9 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
       currentSpeed += (targetSpeed - currentSpeed) * lerp;
       currentX += currentSpeed;
 
-      // Seamless loop: wrap when first half has scrolled out
-      if (currentX <= -halfWidth) currentX += halfWidth;
-      if (currentX >= 0) currentX -= halfWidth;
+      // Seamless loop: wrap when one set has scrolled out
+      if (currentX <= -setWidth) currentX += setWidth;
+      if (currentX >= 0) currentX -= setWidth;
 
       marqueeTrack.style.transform = "translateX(" + currentX + "px)";
       requestAnimationFrame(tick);
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Recalculate half width on resize
     window.addEventListener("resize", () => {
-      halfWidth = marqueeTrack.scrollWidth / 2;
+      setWidth = marqueeTrack.scrollWidth / 4;
     });
 
     requestAnimationFrame(tick);
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (track && pinWrap && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 
-    const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
+    const getScrollAmount = () => -(track.offsetWidth - window.innerWidth);
 
     gsap.to(track, {
       x: getScrollAmount,
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollTrigger: {
         trigger: ".photo-showcase",
         start: "center center",
-        end: () => "+=" + track.scrollWidth,
+        end: () => "+=" + Math.abs(getScrollAmount()),
         pin: pinWrap,
         scrub: true,
         invalidateOnRefresh: true,
