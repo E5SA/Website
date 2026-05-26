@@ -1,9 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Navbar scroll effect
+  // Navbar hide on scroll down, compact on scroll up, full at top
   const navbar = document.querySelector(".navbar");
   if (navbar) {
+    let lastScrollY = window.scrollY;
+
     window.addEventListener("scroll", () => {
-      navbar.classList.toggle("navbar-scrolled", window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY;
+      const scrollingUp = currentScrollY < lastScrollY;
+
+      if (scrollingDown && currentScrollY > 80) {
+        navbar.classList.add("navbar--hidden");
+        navbar.classList.add("navbar--compact");
+      } else if (scrollingUp) {
+        navbar.classList.remove("navbar--hidden");
+        if (currentScrollY <= 80) {
+          navbar.classList.remove("navbar--compact");
+        } else {
+          navbar.classList.add("navbar--compact");
+        }
+      }
+
+      lastScrollY = currentScrollY;
     });
   }
 
@@ -95,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (track && pinWrap && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 
-    const getScrollAmount = () => -(track.offsetWidth - window.innerWidth);
+    const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
 
     gsap.to(track, {
       x: getScrollAmount,
@@ -105,9 +123,12 @@ document.addEventListener("DOMContentLoaded", () => {
         start: "center center",
         end: () => "+=" + Math.abs(getScrollAmount()),
         pin: pinWrap,
-        scrub: true,
+        scrub: 0.1,
         invalidateOnRefresh: true,
       },
     });
+
+    // Recalculate after images load so track.scrollWidth is accurate
+    window.addEventListener("load", () => ScrollTrigger.refresh());
   }
 });
