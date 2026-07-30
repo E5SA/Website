@@ -1,12 +1,12 @@
-# John's Website
+# True Vision Media
 
-A modern, dark-themed portfolio website with a contact form that sends notifications to your phone via Telegram.
+A modern, dark-themed website for a real estate media business — property photography, drone imagery and floorplans — with a contact form that sends notifications to your phone via Telegram.
 
 ## What's in this repo?
 
 | What | Where | Description |
 |------|-------|-------------|
-| 🏠 Home page | `index.html` | Hero, photo showcase, services (Photography/Drones/Floorplans), partners marquee, testimonials, CTA |
+| 🏠 Home page | `index.html` | Hero, photo showcase, services (Photography/Drones/Floorplans), partners marquee, CTA (testimonials commented out — needs real client quotes) |
 | 📧 Contact page | `contact.html` | Form for customers to reach out (name, email, mobile, message) |
 | 📜 Terms of Service | `terms.html` | 11-section terms and conditions page |
 | 🎨 Styles | `css/style.css` | Dark theme, responsive layout, animations |
@@ -45,7 +45,7 @@ The site uses a **dark theme** inspired by [tazmo.com.au](https://www.tazmo.com.
 
 The navbar is fixed at the top with a glass blur effect. Cards and buttons have subtle hover animations.
 
-Between the hero and services sections, there's a **horizontal-scroll photo showcase** — a compact white strip (460px tall) containing 9 photo placeholders that scroll horizontally as you scroll down the page. It uses [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) with 1:1 scroll speed, centers on screen before scrolling begins, and stops when the last photo reaches the right edge.
+Between the hero and services sections, there's a **horizontal-scroll photo showcase** — a full-height white strip (`100vh`) containing 9 real property photos that scroll horizontally as you scroll down the page. It uses [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) with 1:1 scroll speed, centers on screen before scrolling begins, and stops when the last photo reaches the right edge.
 
 The services section highlights three core offerings: **Photography**, **Drones**, and **Floorplans**.
 
@@ -116,12 +116,14 @@ The site is plain HTML — no build step required. You can host it on:
 
 ## What's Still Needed
 
-- [ ] **Add logo and favicon** — Add `logo.png` and `favicon.ico` to the `images/` folder
+- [ ] **Rewrite the Terms of Service** — `terms.html` was rebranded by name only. Its service list, copyright and liability clauses still describe a software agency (web development, cloud, mobile apps). Worth a lawyer's review.
+- [ ] **Add real testimonials** — The section is commented out in `index.html` with a fill-in template. The old quotes were invented template copy and were removed rather than reused.
+- [ ] **Add a favicon** — `images/favicon.ico` is referenced by every page but doesn't exist yet
 - [ ] **Add an About page** — The "About" nav link currently goes nowhere
-- [ ] **Replace photo placeholders** — Add real photos to the horizontal scroll showcase
 - [ ] **Update social media links** — Footer links are placeholders (`#`)
 - [ ] **Deploy the contact backend** — Follow the steps above
 - [ ] **Update form action URL** — Point it to your deployed API
+- [ ] **Add a `.gitignore`** — There isn't one, which is how `.DS_Store` files get committed
 
 ## Project Structure
 

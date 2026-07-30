@@ -116,6 +116,10 @@ section {
     height: 28px;
 }
 
+.navbar--compact .site-name {
+    font-size: 0.8rem;
+}
+
 .navbar--compact ul li a {
     font-size: 0.75rem;
     padding: 6px 12px;
@@ -127,15 +131,34 @@ section {
     align-items: center;
 }
 
+.navbar .logo a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
 .navbar .logo img {
     height: 78px;
     transition: height 0.4s ease;
+}
+
+.navbar .site-name {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    white-space: nowrap;
+    transition: font-size 0.4s ease;
 }
 
 .navbar .main-menu ul {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 .navbar ul li a {
@@ -948,6 +971,14 @@ section {
         padding: 12px 0;
     }
 
+    .navbar .logo a {
+        gap: 10px;
+    }
+
+    .navbar .site-name {
+        font-size: 0.8rem;
+    }
+
     .navbar ul li a {
         padding: 8px 12px;
         font-size: 0.85rem;
@@ -987,7 +1018,23 @@ section {
         padding: 8px 8px;
     }
 
+    /* Logo mark alone carries the brand at this width — the wordmark would
+       crowd the nav links off the row. */
+    .navbar .site-name {
+        display: none;
+    }
+
     .hero h1 {
         letter-spacing: 0.03em;
     }
+}
+
+/* ==========================================================================
+   TEMPORARY FEATURE FLAG — hide links that leave the home page
+   ==========================================================================
+   Driven by hideOffHomeLinks in js/config.js, which adds .flag-hide-off-home
+   to <html>. Delete this entire block when the flag is retired.
+   ========================================================================== */
+.flag-hide-off-home [data-off-home] {
+    display: none !important;
 }

@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - John's Website</title>
+    <title>Terms of Service — True Vision Media</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Space+Grotesk:wght@500;700&family=Spline+Sans:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Temporary feature flags — must stay in <head> so flagged elements never flash. -->
+    <script src="js/config.js"></script>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo">
                 <a href="index.html">
-                    <img src="images/logo.png" alt="logo">
+                    <img src="images/logo/TrueVisionLogoTransparent.png" alt="">
+                    <span class="site-name">True Vision Media</span>
                 </a>
             </div>
             <div class="main-menu">
@@ -24,13 +27,13 @@
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li>
+                    <li data-off-home>
                         <a href="#">About</a>
                     </li>
-                    <li>
+                    <li data-off-home>
                         <a href="terms.html">Terms</a>
                     </li>
-                    <li>
+                    <li data-off-home>
                         <a class="btn" href="contact.html"><i class="fa-regular fa-envelope"></i> Contact</a>
                     </li>
                 </ul>
@@ -42,14 +45,14 @@
         <section class="terms-section">
             <div class="container-sm">
                 <h1>Terms of Service.</h1>
-                <p class="terms-intro">Welcome to John's Website — your trusted partner in digital solutions. Please review our Terms and Conditions to understand your rights, responsibilities, and our commitment to delivering quality services.</p>
+                <p class="terms-intro">Welcome to True Vision Media — your trusted partner in digital solutions. Please review our Terms and Conditions to understand your rights, responsibilities, and our commitment to delivering quality services.</p>
 
                 <div class="terms-content">
                     <h2>1. Introduction</h2>
-                    <p>These Terms and Conditions govern the provision and use of digital services offered by John's Website. By accessing or utilising our services, you acknowledge that you have read, understood, and agreed to be legally bound by the terms and conditions set forth herein. If you do not agree with any part of these Terms, please refrain from using our services.</p>
+                    <p>These Terms and Conditions govern the provision and use of digital services offered by True Vision Media. By accessing or utilising our services, you acknowledge that you have read, understood, and agreed to be legally bound by the terms and conditions set forth herein. If you do not agree with any part of these Terms, please refrain from using our services.</p>
 
                     <h2>2. Scope of Services</h2>
-                    <p>John's Website offers a comprehensive range of professional digital services, including, but not limited to:</p>
+                    <p>True Vision Media offers a comprehensive range of professional digital services, including, but not limited to:</p>
                     <ul>
                         <li>Web development</li>
                         <li>UI/UX design</li>
@@ -57,13 +60,13 @@
                         <li>Mobile application development</li>
                         <li>Technology consulting</li>
                     </ul>
-                    <p>Services are carried out in accordance with the client's instructions. John's Website reserves the right to amend, suspend, or discontinue any part of its service offerings at any time, without prior notice or liability.</p>
+                    <p>Services are carried out in accordance with the client's instructions. True Vision Media reserves the right to amend, suspend, or discontinue any part of its service offerings at any time, without prior notice or liability.</p>
 
                     <h2>3. Bookings &amp; Engagements</h2>
                     <p>Clients may engage our services via the contact form on our website or through direct communication. Upon confirmation, both parties agree to the scope, timeline, and deliverables as outlined in the project proposal or statement of work.</p>
                     <h3>Engagement Guidelines</h3>
                     <ul>
-                        <li><strong>Client Contact Information:</strong> Clients are responsible for providing accurate contact details. John's Website is not liable for missed communication due to incorrect information.</li>
+                        <li><strong>Client Contact Information:</strong> Clients are responsible for providing accurate contact details. True Vision Media is not liable for missed communication due to incorrect information.</li>
                         <li><strong>Project Requirements:</strong> Clients must provide complete and accurate project requirements at the time of engagement. Changes to scope after commencement may incur additional fees.</li>
                         <li><strong>Access &amp; Resources:</strong> Clients must ensure timely access to all necessary systems, accounts, and resources required to complete the project.</li>
                     </ul>
@@ -72,7 +75,7 @@
                     <p>By engaging our services, clients agree to the following:</p>
                     <ul>
                         <li>Provide complete, accurate, and timely project information, including any specific requirements or constraints.</li>
-                        <li>Ensure that John's Website is granted appropriate access and permissions to perform the agreed-upon services.</li>
+                        <li>Ensure that True Vision Media is granted appropriate access and permissions to perform the agreed-upon services.</li>
                         <li>Review and verify all deliverables for accuracy prior to deployment or public use.</li>
                         <li>Communicate feedback and approval in a timely manner to avoid project delays.</li>
                     </ul>
@@ -81,16 +84,16 @@
                     <p>All service fees are outlined in the project proposal provided to the client prior to engagement. Pricing is based on the scope of work agreed upon and may vary depending on complexity, timeline, and resource requirements.</p>
                     <ul>
                         <li><strong>Payment Terms:</strong> Invoices must be paid within 14 days of the invoice date unless otherwise agreed in writing.</li>
-                        <li>John's Website reserves the right to suspend or withhold further services for overdue accounts greater than 28 days from the date of invoice.</li>
+                        <li>True Vision Media reserves the right to suspend or withhold further services for overdue accounts greater than 28 days from the date of invoice.</li>
                         <li>Invoices that remain unpaid for more than 60 days may be referred to a debt collection agency. Clients will be responsible for any associated collection fees or legal costs.</li>
                     </ul>
 
                     <h2>6. Intellectual Property &amp; Copyright</h2>
-                    <p>All content and materials created by John's Website, including but not limited to code, designs, graphics, and documentation, are the intellectual property of John's Website until full payment has been received.</p>
+                    <p>All content and materials created by True Vision Media, including but not limited to code, designs, graphics, and documentation, are the intellectual property of True Vision Media until full payment has been received.</p>
                     <p>Upon full payment, clients are granted a non-exclusive, non-transferable license to use these materials for the specific project for which they were created. Any reuse, modification, or redistribution of these materials for other projects or third-party usage requires prior written consent.</p>
 
                     <h2>7. Limitation of Liability</h2>
-                    <p>John's Website shall not be liable for:</p>
+                    <p>True Vision Media shall not be liable for:</p>
                     <ul>
                         <li>Any direct or indirect loss, damage, or expense arising from the use of our services or deliverables.</li>
                         <li>Any inaccuracies, omissions, or errors in the materials provided.</li>
@@ -100,19 +103,19 @@
                     <p>Clients are solely responsible for reviewing and verifying the accuracy and appropriateness of all deliverables before deploying them to production environments.</p>
 
                     <h2>8. Cancellation &amp; Rescheduling</h2>
-                    <p>Clients must provide a minimum of 7 days' notice to cancel or reschedule an engagement without incurring a fee. Cancellations or changes received with less than 7 days' notice may incur a fee of up to 30% of the agreed project value at John's Website's discretion.</p>
+                    <p>Clients must provide a minimum of 7 days' notice to cancel or reschedule an engagement without incurring a fee. Cancellations or changes received with less than 7 days' notice may incur a fee of up to 30% of the agreed project value at True Vision Media's discretion.</p>
 
                     <h2>9. Data Privacy &amp; Confidentiality</h2>
-                    <p>All client data provided to John's Website, including access credentials, business information, and personal contact details, is handled with strict confidentiality. We do not share or sell client information to third parties. All data is stored securely and retained only for the duration necessary to fulfil our obligations.</p>
+                    <p>All client data provided to True Vision Media, including access credentials, business information, and personal contact details, is handled with strict confidentiality. We do not share or sell client information to third parties. All data is stored securely and retained only for the duration necessary to fulfil our obligations.</p>
 
                     <h2>10. Governing Law</h2>
-                    <p>These Terms and Conditions shall be governed by and construed in accordance with the applicable laws of the jurisdiction in which John's Website operates. Any disputes arising from or in connection with these Terms shall be subject to the exclusive jurisdiction of the relevant courts.</p>
+                    <p>These Terms and Conditions are governed by and construed in accordance with the laws of the State of Victoria, Australia. Any disputes arising from or in connection with these Terms are subject to the exclusive jurisdiction of the courts of Victoria.</p>
 
                     <h2>11. Entire Agreement</h2>
-                    <p>These Terms and Conditions constitute the entire agreement between the client and John's Website and supersede any prior agreements, communications, or representations, whether written or oral.</p>
+                    <p>These Terms and Conditions constitute the entire agreement between the client and True Vision Media and supersede any prior agreements, communications, or representations, whether written or oral.</p>
                     <p>By proceeding with our services, you confirm that you have read, understood, and agree to be bound by these Terms and Conditions.</p>
 
-                    <div class="terms-contact">
+                    <div class="terms-contact" data-off-home>
                         <p><strong>For further assistance or inquiries, please contact us:</strong></p>
                         <a href="contact.html" class="btn btn-accent">Get In Touch</a>
                     </div>
@@ -123,13 +126,13 @@
 
     <footer class="site-footer">
         <div class="container">
-            <div class="social-links">
+            <div class="social-links" data-off-home>
                 <a href="#"><i class="fa-brands fa-tiktok"></i></a>
                 <a href="#"><i class="fa-brands fa-youtube"></i></a>
                 <a href="#"><i class="fa-brands fa-facebook"></i></a>
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
             </div>
-            <p class="footer-disclaimer">© 2026 John's Website. All rights reserved.</p>
+            <p class="footer-disclaimer">© 2026 True Vision Media. All rights reserved.</p>
         </div>
     </footer>
     <script src="js/main.js"></script>
