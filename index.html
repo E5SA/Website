@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>John's Website</title>
+    <title>True Vision Media — Real Estate Photography, Drones &amp; Floorplans</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Space+Grotesk:wght@500;700&family=Spline+Sans:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Temporary feature flags — must stay in <head> so flagged elements never flash. -->
+    <script src="js/config.js"></script>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo">
                 <a href="index.html">
-                    <img src="images/logo/TrueVisionLogoTransparent.png" alt="True Vision Media">
+                    <img src="images/logo/TrueVisionLogoTransparent.png" alt="">
+                    <span class="site-name">True Vision Media</span>
                 </a>
             </div>
             <div class="main-menu">
@@ -24,13 +27,13 @@
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li>
+                    <li data-off-home>
                         <a href="#">About</a>
                     </li>
-                    <li>
+                    <li data-off-home>
                         <a href="terms.html">Terms</a>
                     </li>
-                    <li>
+                    <li data-off-home>
                         <a class="btn" href="contact.html"><i class="fa-regular fa-envelope"></i> Contact</a>
                     </li>
                 </ul>
@@ -40,11 +43,11 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Bringing Ideas to Life</h1>
-            <p>Welcome to John's Website — where creativity and technology come together. We craft digital experiences that truly resonate.</p>
+            <h1>Every Property, Perfectly Framed</h1>
+            <p>Professional real estate photography, CASA-accredited aerial imagery and measured floorplans for agencies across Melbourne and greater Victoria.</p>
             <div class="hero-buttons">
-                <a href="#" class="btn btn-accent">Get Started</a>
-                <a href="#" class="btn btn-outline">Learn More</a>
+                <a href="#services" class="btn btn-accent">View Our Work</a>
+                <a href="contact.html" class="btn btn-outline" data-off-home>Get In Touch</a>
             </div>
         </div>
     </section>
@@ -66,7 +69,7 @@
         </div>
     </div>
 
-    <section class="services">
+    <section class="services" id="services">
         <div class="container">
             <h2>What We Do</h2>
             <div class="services-grid">
@@ -138,27 +141,37 @@
 
     </section>
 
+    <!-- TESTIMONIALS — hidden until real client quotes are available.
+         The previous three testimonials were placeholder copy from the site template
+         (invented names, invented quotes about software delivery), so they have been
+         removed rather than rebranded — publishing them would be fabricated social proof.
+
+         To enable: delete this comment's opening and closing markers, then replace the
+         bracketed text below with real quotes. Add or remove .testimonial-card blocks
+         freely; the grid reflows 3 to 2 to 1 columns responsively.
+
     <section class="testimonials">
         <div class="container">
             <h2>What People Say</h2>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <p>"Working with John's team was a game-changer. They delivered a product that exceeded every expectation we had."</p>
-                    <span><strong>Alex Turner</strong></span>
+                    <p>"[Client quote]"</p>
+                    <span><strong>[Client name]</strong>, [Agency]</span>
                 </div>
                 <div class="testimonial-card">
-                    <p>"Their attention to detail and creative approach made the entire process seamless. Highly recommended."</p>
-                    <span><strong>Samira Patel</strong></span>
+                    <p>"[Client quote]"</p>
+                    <span><strong>[Client name]</strong>, [Agency]</span>
                 </div>
                 <div class="testimonial-card">
-                    <p>"From start to finish, the communication and quality were outstanding. We'll definitely be coming back."</p>
-                    <span><strong>Marcus Chen</strong></span>
+                    <p>"[Client quote]"</p>
+                    <span><strong>[Client name]</strong>, [Agency]</span>
                 </div>
             </div>
         </div>
     </section>
+    -->
 
-    <section class="cta-section">
+    <section class="cta-section" data-off-home>
         <div class="container">
             <h2>Let's Work Together</h2>
             <p>Interested in working together? We'd love to hear from you!</p>
@@ -168,13 +181,13 @@
 
     <footer class="site-footer">
         <div class="container">
-            <div class="social-links">
+            <div class="social-links" data-off-home>
                 <a href="#"><i class="fa-brands fa-tiktok"></i></a>
                 <a href="#"><i class="fa-brands fa-youtube"></i></a>
                 <a href="#"><i class="fa-brands fa-facebook"></i></a>
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
             </div>
-            <p class="footer-disclaimer">© 2026 John's Website. All rights reserved. <a href="terms.html">Terms of Service</a></p>
+            <p class="footer-disclaimer">© 2026 True Vision Media. All rights reserved. <a href="terms.html" data-off-home>Terms of Service</a></p>
         </div>
     </footer>
 
