@@ -98,7 +98,27 @@ section {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 16px 0;
+    padding: 12px 0;
+    transition: transform 0.4s ease, opacity 0.4s ease, padding 0.4s ease, background 0.4s ease;
+}
+
+.navbar--hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.navbar--compact {
+    padding: 4px 0;
+}
+
+.navbar--compact .logo img {
+    height: 28px;
+}
+
+.navbar--compact ul li a {
+    font-size: 0.75rem;
+    padding: 6px 12px;
 }
 
 .navbar .container {
@@ -108,7 +128,8 @@ section {
 }
 
 .navbar .logo img {
-    height: 32px;
+    height: 78px;
+    transition: height 0.4s ease;
 }
 
 .navbar .main-menu ul {
@@ -121,7 +142,7 @@ section {
     padding: 10px 20px;
     display: block;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     color: var(--text-secondary);
     transition: color var(--transition);
     letter-spacing: 0.02em;
@@ -251,7 +272,7 @@ section {
 }
 
 .horizontal-pin-wrap {
-    height: 460px;
+    height: 100vh;
     display: flex;
     align-items: center;
     background: #ffffff;
@@ -261,41 +282,47 @@ section {
 .horizontal-track {
     display: flex;
     align-items: center;
-    gap: 24px;
-    padding: 0 120px 0 30px;
+    gap: 12px;
+    padding: 0 12px;
     width: max-content;
+    height: 100%;
     will-change: transform;
 }
 
 .photo-placeholder {
     flex-shrink: 0;
-    width: 350px;
-    background: #f0f0f0;
-    border: 1px dashed rgba(0, 0, 0, 0.15);
-    border-radius: var(--radius);
+    width: auto;
+    background: #000;
+    border: none;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    transition: box-shadow 0.4s ease;
 }
 
 .photo-placeholder:hover {
-    border-color: var(--accent);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Height variations */
+/* Height variations — range kept within ~5% (96vh → 92vh) */
 .photo-tall {
-    height: 420px;
+    height: calc(96vh - 20px);
 }
 
 .photo-medium {
-    height: 340px;
+    height: calc(94vh - 20px);
 }
 
 .photo-short {
-    height: 260px;
+    height: calc(92vh - 20px);
+}
+
+.photo-track-end {
+    flex-shrink: 0;
+    width: 120px;
+    height: 100%;
 }
 
 .photo-placeholder span {
@@ -307,9 +334,9 @@ section {
 }
 
 .photo-placeholder img {
-    width: 100%;
     height: 100%;
-    object-fit: cover;
+    width: auto;
+    display: block;
 }
 
 @media (max-width: 768px) {

@@ -4,7 +4,7 @@
 
 ## Project Summary
 
-Static portfolio/business website for "John's Website". Dark-themed, single-page design inspired by [tazmo.com.au](https://www.tazmo.com.au/). The contact form is backed by an AWS Lambda that sends Telegram notifications. The site has no build step — it is plain HTML/CSS/JS served statically.
+Static portfolio/business website for **True Vision Media**. Dark-themed, single-page design inspired by [tazmo.com.au](https://www.tazmo.com.au/). The contact form is backed by an AWS Lambda that sends Telegram notifications. The site has no build step — it is plain HTML/CSS/JS served statically.
 
 ## Repository Root
 
@@ -25,6 +25,8 @@ c:/Users/l172955/website/
 ├── js/
 │   └── main.js             # Navbar scroll, smooth scroll, reveal, GSAP horizontal scroll, marquee
 ├── images/
+│   ├── logo/               # Brand logos: TrueVisionLogoTransparent.png, TrueVisionFullLogoInverted.png, TrueVisionMediaLogoInverted.png
+│   ├── house_photos/       # Real property photos used in the horizontal scroll gallery
 │   └── partners/           # Partner logos (raywhite.png, fletchers.png, barryplant.svg, xcommercial.svg)
 ├── lambda/
 │   └── handler.js          # AWS Lambda — parses form POST, sends Telegram message
@@ -77,9 +79,9 @@ Font Awesome 7.0.1 via CDN (`cdnjs.cloudflare.com`). Used for:
 
 ### index.html Sections (in DOM order)
 
-1. **`nav.navbar`** — Fixed top, glassmorphic (`backdrop-filter: blur`). Logo left, nav links right (Home, About, Terms, Contact). Contact link is `.btn` styled.
+1. **`nav.navbar`** — Fixed top, glassmorphic (`backdrop-filter: blur`). Logo left (`TrueVisionLogoTransparent.png`, 78px tall), nav links right (Home, About, Terms, Contact). Contact link is `.btn` styled. Hides on scroll-down (`.navbar--hidden`), shows compact on scroll-up (`.navbar--compact`), full size when at top.
 2. **`section.hero`** — Full viewport (`min-height: 100vh`), centered. `h1` + `p` + two CTA buttons (`.btn-accent`, `.btn-outline`). Radial gradient glow via `::before`.
-3. **`div.photo-showcase`** — Horizontal-scroll photo gallery. `.horizontal-pin-wrap` (460px, white `#ffffff` background, `overflow: hidden`) is pinned by GSAP ScrollTrigger. `.horizontal-track` (`width: max-content`, padding `30px` left / `120px` right) contains 9 `.photo-placeholder` elements with varying heights (`.photo-tall` 420px, `.photo-medium` 340px, `.photo-short` 260px). Pins at `center center` so photos are centered on screen. `scrub: true` for 1:1 scroll speed. `end` uses `track.offsetWidth - window.innerWidth` so scrolling stops when last photo reaches right edge. Gap `24px`.
+3. **`div.photo-showcase`** — Horizontal-scroll photo gallery. `.horizontal-pin-wrap` (`100vh`, white `#ffffff` background, `overflow: hidden`) is pinned by GSAP ScrollTrigger. `.horizontal-track` (`width: max-content`, padding `0 12px`, gap `12px`) contains 9 real property photo `.photo-placeholder` elements with viewport-relative heights (`.photo-tall` `calc(96vh - 20px)`, `.photo-medium` `calc(94vh - 20px)`, `.photo-short` `calc(92vh - 20px)`) and a `.photo-track-end` spacer (120px). Photos use `height: 100%; width: auto`. Pins at `center center`. `scrub: 0.1` for smooth scroll. `end` uses `track.scrollWidth - window.innerWidth`. ScrollTrigger refreshed on `window.load` to account for image load times.
 4. **`section.services`** — `h2 "What We Do"` + `.services-grid` (CSS grid, 3→2→1 cols responsive). 3 `.service-card` elements: Photography (`fa-camera`), Drones (`fa-helicopter`), Floorplans (`fa-compass-drafting`).
 5. **`section.partners`** — `"Partnered With"` heading (uppercase) + JS-driven marquee with 4 partner logos (Ray White, Fletchers, Barry Plant, X Commercial) repeated 4× for seamless loop. Scroll-reactive with lerp smoothing.
 6. **`section.testimonials`** — `h2` + `.testimonials-grid` (3→2→1 cols). 3 `.testimonial-card` with quote `<p>`, author `<span><strong>`.
@@ -105,10 +107,10 @@ Standalone page using Mermaid.js (CDN v11) to render a flowchart of the contact 
 Single flat CSS file, ~900 lines. Organised in sections:
 1. **Reset & Root** — Box-sizing, CSS variables
 2. **Utility** — `.container` (1200px), `.container-sm` (800px), section padding
-3. **Navbar** — Fixed, transparent bg with blur, border-bottom
+3. **Navbar** — Fixed, transparent bg with blur, border-bottom. `.navbar--hidden` (slides up, opacity 0). `.navbar--compact` (shrinks padding, logo height 28px, smaller font).
 4. **Buttons** — `.btn`, `.btn-accent`, `.btn-outline`, `.hero-buttons`
 5. **Hero** — Flexbox centered, clamp() font sizing, `::before` radial glow
-6. **Photo Showcase** — `.photo-showcase` (transparent bg), `.horizontal-pin-wrap` (460px, white bg, overflow hidden), `.horizontal-track` (flex, gap 24px, padding 30px left / 120px right, `width: max-content`). Photo height classes: `.photo-tall` (420px), `.photo-medium` (340px), `.photo-short` (260px)
+6. **Photo Showcase** — `.photo-showcase` (transparent bg), `.horizontal-pin-wrap` (`100vh`, white bg, overflow hidden), `.horizontal-track` (flex, gap `12px`, padding `0 12px`, `width: max-content`, `height: 100%`). Photo height classes: `.photo-tall` (`calc(96vh - 20px)`), `.photo-medium` (`calc(94vh - 20px)`), `.photo-short` (`calc(92vh - 20px)`). Photos are `height: 100%; width: auto`. `.photo-track-end` spacer (120px wide). No border or border-radius on photos — black bg.
 7. **Services** — Grid layout, `.service-card` with hover lift/shadow/border
 8. **Partners** — `"Partnered With"` heading (uppercase), marquee track with partner logos, brightness/invert filter, Ray White scale override
 9. **Testimonials** — Grid layout, `.testimonial-card` with `::before` decorative quote mark
@@ -122,10 +124,10 @@ Single flat CSS file, ~900 lines. Organised in sections:
 ## JavaScript (`js/main.js`)
 
 Vanilla JS, depends on GSAP + ScrollTrigger (CDN). Five features:
-1. **Navbar scroll** — Adds `.navbar-scrolled` class when `scrollY > 50`.
+1. **Navbar scroll** — Hides navbar (`.navbar--hidden`) when scrolling down past 80px; shows compact version (`.navbar--compact`) when scrolling up; removes compact at top. Smooth `transform/opacity` transition.
 2. **Smooth scroll** — Intercepts `a[href^="#"]` clicks, uses `scrollIntoView`.
 3. **Scroll reveal** — `IntersectionObserver` on `.service-card`, `.testimonial-card`, `.hero`; adds `.revealed` class; unobserves after trigger.
-4. **Horizontal photo scroll** — GSAP ScrollTrigger pins `.horizontal-pin-wrap` and translates `.horizontal-track` horizontally as the user scrolls. `scrub: true` for 1:1 speed matching. `start: "center center"` so photos are centered on screen before scrolling begins. `end` uses `track.offsetWidth - window.innerWidth` so scrolling stops when last photo reaches right edge. The white strip (`460px` tall, `overflow: hidden`) is on the pin wrap, not the outer section (so ScrollTrigger's spacer doesn't show white).
+4. **Horizontal photo scroll** — GSAP ScrollTrigger pins `.horizontal-pin-wrap` and translates `.horizontal-track` horizontally as the user scrolls. `scrub: 0.1` for smooth scrolling. `start: "center center"`. `end` uses `track.scrollWidth - window.innerWidth`. The white strip (`100vh`, `overflow: hidden`) is on the pin wrap, not the outer section. `ScrollTrigger.refresh()` called on `window.load` to get accurate track width after images load.
 5. **Partners marquee** — JS-driven `requestAnimationFrame` loop with lerp smoothing. Scroll-reactive: speeds up on scroll, reverses on scroll-up, settles back to base drift. Constants: `baseSpeed=-0.8`, `scrollMultiplier=8`, `lerp=0.06`. Track width divided by 4 (4 logo sets) for seamless wrapping in both directions.
 
 ## Backend / Infrastructure
@@ -187,10 +189,10 @@ Host on Cloudflare Pages, GitHub Pages, Netlify, Vercel, or any static server. `
 
 ## Known Gaps / TODOs
 
-- **`logo.png` and `favicon.ico`** — Referenced in nav and `<head>` but files don't exist yet. Need to be created/added to `images/`.
+- **`favicon.ico`** — Referenced in `<head>` but file does not exist yet.
+- **Logo files** — `TrueVisionLogoTransparent.png`, `TrueVisionFullLogoInverted.png`, `TrueVisionMediaLogoInverted.png` added to `images/logo/`. Nav now uses `TrueVisionLogoTransparent.png`.
 - **About page** — Nav links to `#` (no about page or section exists yet).
 - **Contact form action URL** — Still set to placeholder `https://your-api.example.com/contact`. Must be updated after backend deployment.
 - **No mobile hamburger menu** — Navbar links stack/shrink on mobile but there is no burger toggle for very small screens.
 - **Social media links** — All `href="#"` placeholders. Need real URLs.
 - **No form client-side validation feedback** — Form uses HTML5 `required` but no JS validation or success/error messaging after submit.
-- **Photo placeholders** — 9 placeholder boxes in horizontal scroll; need real photos.
